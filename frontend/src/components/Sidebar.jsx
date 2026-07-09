@@ -1,23 +1,17 @@
 import {
     Drawer,
+    Toolbar,
+    Typography,
     List,
     ListItem,
     ListItemButton,
-    ListItemIcon,
     ListItemText,
-    Toolbar,
-    Typography,
     Box
 } from "@mui/material";
 
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import SettingsIcon from "@mui/icons-material/Settings";
-
 const drawerWidth = 240;
 
-function Sidebar() {
+function Sidebar({ setPage }) {
 
     return (
 
@@ -37,13 +31,13 @@ function Sidebar() {
 
             <Toolbar />
 
-            <Box sx={{ p: 2 }}>
+            <Box sx={{ p: 3 }}>
 
                 <Typography
                     variant="h6"
                     fontWeight="bold"
                 >
-                    HR Panel
+                    HR Management
                 </Typography>
 
             </Box>
@@ -51,51 +45,39 @@ function Sidebar() {
             <List>
 
                 <ListItem disablePadding>
-                    <ListItemButton>
 
-                        <ListItemIcon sx={{ color: "white" }}>
-                            <DashboardIcon />
-                        </ListItemIcon>
+                    <ListItemButton
+                        onClick={() => setPage("HOME")}
+                    >
 
-                        <ListItemText primary="Dashboard" />
+                        <ListItemText primary="Home" />
 
                     </ListItemButton>
+
                 </ListItem>
 
                 <ListItem disablePadding>
-                    <ListItemButton>
 
-                        <ListItemIcon sx={{ color: "white" }}>
-                            <PeopleIcon />
-                        </ListItemIcon>
+                    <ListItemButton
+                        onClick={() => setPage("USER")}
+                    >
 
-                        <ListItemText primary="Employees" />
+                        <ListItemText primary="Employee" />
 
                     </ListItemButton>
+
                 </ListItem>
 
                 <ListItem disablePadding>
-                    <ListItemButton>
 
-                        <ListItemIcon sx={{ color: "white" }}>
-                            <BeachAccessIcon />
-                        </ListItemIcon>
+                    <ListItemButton
+                        onClick={() => setPage("ADMIN")}
+                    >
 
-                        <ListItemText primary="Leave Management" />
-
-                    </ListItemButton>
-                </ListItem>
-
-                <ListItem disablePadding>
-                    <ListItemButton>
-
-                        <ListItemIcon sx={{ color: "white" }}>
-                            <SettingsIcon />
-                        </ListItemIcon>
-
-                        <ListItemText primary="Settings" />
+                        <ListItemText primary="Admin" />
 
                     </ListItemButton>
+
                 </ListItem>
 
             </List>

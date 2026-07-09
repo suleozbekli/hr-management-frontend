@@ -9,55 +9,72 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    IconButton
+    IconButton,
+    Chip
 } from "@mui/material";
 
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function EmployeeList({ setSelectedEmployee, refresh, refreshEmployees }) {
+function EmployeeList({ refresh, refreshEmployees }) {
 
     const [employees, setEmployees] = useState([]);
 
     useEffect(() => {
-        fetchEmployees();
+        loadEmployees();
     }, [refresh]);
 
-    const fetchEmployees = async () => {
+    const loadEmployees = async () => {
+
         try {
-            const response = await getEmployees();
-            setEmployees(response.data);
-        } catch (error) {
-            console.error(error);
+
+            const res = await getEmployees();
+
+            setEmployees(res.data);
+
+        } catch (err) {
+
+            console.log(err);
+
         }
+
     };
 
     const handleDelete = async (id) => {
 
-        if (!window.confirm("Delete this employee?"))
-            return;
+        if (!window.confirm("Delete employee?")) return;
 
         try {
+
             await deleteEmployee(id);
+
             refreshEmployees();
-        } catch (error) {
-            console.error(error);
+
+        } catch (err) {
+
+            alert("Delete failed.");
+
         }
+
     };
 
     return (
 
         <Paper
             elevation={3}
-            sx={{ mt: 4, p: 3, borderRadius: 3 }}
+            sx={{
+                p:4,
+                borderRadius:3
+            }}
         >
 
             <Typography
                 variant="h5"
                 fontWeight="bold"
-                gutterBottom
+                mb={3}
             >
+
                 Employee List
+
             </Typography>
 
             <Table>
@@ -66,17 +83,11 @@ function EmployeeList({ setSelectedEmployee, refresh, refreshEmployees }) {
 
                     <TableRow>
 
-                        <TableCell><b>Name</b></TableCell>
-
-                        <TableCell><b>Email</b></TableCell>
-
-                        <TableCell><b>Department</b></TableCell>
-
-                        <TableCell><b>Position</b></TableCell>
-
-                        <TableCell><b>Salary</b></TableCell>
-
-                        <TableCell align="center"><b>Actions</b></TableCell>
+                        <TableCell>Name</TableCell>
+                        <TableCell>Department</TableCell>
+                        <TableCell>Position</TableCell>
+                        <TableCell>Annual Leave</TableCell>
+                        <TableCell align="center">Action</TableCell>
 
                     </TableRow>
 
@@ -84,42 +95,46 @@ function EmployeeList({ setSelectedEmployee, refresh, refreshEmployees }) {
 
                 <TableBody>
 
-                    {employees.map((employee) => (
+                    {employees.map(emp => (
 
-                        <TableRow key={employee.id} hover>
+                        <TableRow key={emp.id} hover>
 
                             <TableCell>
 
-                                {employee.firstName} {employee.lastName}
+                                {emp.firstName} {emp.lastName}
 
                             </TableCell>
 
-                            <TableCell>{employee.email}</TableCell>
+                            <TableCell>
 
-                            <TableCell>{employee.department}</TableCell>
+                                {emp.department}
 
-                            <TableCell>{employee.position}</TableCell>
+                            </TableCell>
 
                             <TableCell>
 
-                                ₺{employee.salary?.toLocaleString("tr-TR")}
+                                {emp.position}
+
+                            </TableCell>
+
+                            <TableCell>
+
+                                <Chip
+                                    color="success"
+                                    label={emp.annualLeave + " Days"}
+                                />
 
                             </TableCell>
 
                             <TableCell align="center">
 
                                 <IconButton
-                                    color="primary"
-                                    onClick={() => setSelectedEmployee(employee)}
-                                >
-                                    <EditIcon />
-                                </IconButton>
-
-                                <IconButton
                                     color="error"
-                                    onClick={() => handleDelete(employee.id)}
+                                    onClick={() => handleDelete(emp.id)}
                                 >
-                                    <DeleteIcon />
+
+                                    <DeleteIcon/>
+
                                 </IconButton>
 
                             </TableCell>

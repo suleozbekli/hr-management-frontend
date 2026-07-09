@@ -2,6 +2,7 @@ package com.sule.hrmanagement.controller;
 
 import com.sule.hrmanagement.dto.EmployeeRequest;
 import com.sule.hrmanagement.dto.EmployeeResponse;
+import com.sule.hrmanagement.dto.LeaveRequestResponse;
 import com.sule.hrmanagement.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,4 +49,6 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
     }
+
+
 }

@@ -129,4 +129,16 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
 
         return mapToResponse(leaveRequestRepository.save(leave));
     }
+    @Override
+    public void updateLeaveStatus(Long id, String status) {
+        LeaveRequest request = leaveRequestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("İzin talebi bulunamadı: " + id));
+
+        // .toUpperCase() ekleyerek her zaman büyük harf ile eşleşmesini sağla
+        request.setStatus(LeaveStatus.valueOf(status.toUpperCase()));
+
+        leaveRequestRepository.save(request);
+    }
+
 }
+

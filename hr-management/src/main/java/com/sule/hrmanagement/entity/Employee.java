@@ -38,6 +38,9 @@ public class Employee {
 
     private Integer annualLeave;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToMany(mappedBy = "employee",
             cascade = CascadeType.ALL,
             orphanRemoval = true)

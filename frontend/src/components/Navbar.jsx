@@ -2,8 +2,7 @@ import {
     AppBar,
     Toolbar,
     Typography,
-    Box,
-    Avatar
+    Box
 } from "@mui/material";
 
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
@@ -14,29 +13,35 @@ function Navbar() {
 
         <AppBar
             position="fixed"
-            elevation={2}
+            elevation={3}
             sx={{
                 zIndex: (theme) => theme.zIndex.drawer + 1,
                 backgroundColor: "#1565C0"
             }}
         >
 
-            <Toolbar>
+            <Toolbar
+                sx={{
+                    height: 70,
+                    display: "flex",
+                    alignItems: "center"
+                }}
+            >
 
                 <BusinessCenterIcon
                     sx={{
-                        fontSize: 34,
+                        fontSize: 36,
                         mr: 2
                     }}
                 />
 
-                <Box sx={{ flexGrow: 1 }}>
+                <Box>
 
                     <Typography
                         variant="h5"
                         sx={{
                             fontWeight: 700,
-                            lineHeight: 1.1
+                            lineHeight: 1
                         }}
                     >
                         HR Management System
@@ -45,47 +50,12 @@ function Navbar() {
                     <Typography
                         variant="body2"
                         sx={{
-                            opacity: 0.85
+                            opacity: 0.9,
+                            mt: 0.5
                         }}
                     >
                         Employee & Leave Management Dashboard
                     </Typography>
-
-                </Box>
-
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 2
-                    }}
-                >
-
-                    <Box textAlign="right">
-
-                        <Typography
-                            variant="body1"
-                            fontWeight="bold"
-                        >
-                            Admin
-                        </Typography>
-
-                        <Typography variant="caption">
-                            Human Resources
-                        </Typography>
-
-                    </Box>
-
-                    <Avatar
-                        sx={{
-                            bgcolor: "#26A69A",
-                            width: 45,
-                            height: 45,
-                            fontWeight: "bold"
-                        }}
-                    >
-                        A
-                    </Avatar>
 
                 </Box>
 

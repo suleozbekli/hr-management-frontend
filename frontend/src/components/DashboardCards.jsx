@@ -1,73 +1,147 @@
-import { Grid, Card, CardContent, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { getEmployees, getLeaves } from "../api/api";
+
+import {
+    Grid,
+    Card,
+    CardContent,
+    Typography
+} from "@mui/material";
+
 import GroupsIcon from "@mui/icons-material/Groups";
-import ApartmentIcon from "@mui/icons-material/Apartment";
-import BeachAccessIcon from "@mui/icons-material/BeachAccess";
-import PaidIcon from "@mui/icons-material/Paid";
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 function DashboardCards() {
 
+    const [employees, setEmployees] = useState([]);
+    const [leaves, setLeaves] = useState([]);
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const loadData = async () => {
+
+        const emp = await getEmployees();
+        const leave = await getLeaves();
+
+        setEmployees(emp.data);
+        setLeaves(leave.data);
+
+    };
+
+    const pending = leaves.filter(l => l.status === "PENDING").length;
+    const approved = leaves.filter(l => l.status === "APPROVED").length;
+    const rejected = leaves.filter(l => l.status === "REJECTED").length;
+
     return (
 
-        <Grid container spacing={3} sx={{ mt: 2 }}>
+        <Grid container spacing={3} mb={4}>
 
             <Grid item xs={12} md={3}>
-                <Card elevation={3}>
+
+                <Card>
+
                     <CardContent>
-                        <GroupsIcon color="primary" fontSize="large" />
+
+                        <GroupsIcon color="primary" fontSize="large"/>
+
                         <Typography variant="h6">
+
                             Employees
+
                         </Typography>
 
                         <Typography variant="h4">
-                            12
+
+                            {employees.length}
+
                         </Typography>
+
                     </CardContent>
+
                 </Card>
+
             </Grid>
 
             <Grid item xs={12} md={3}>
-                <Card elevation={3}>
+
+                <Card>
+
                     <CardContent>
-                        <ApartmentIcon color="success" fontSize="large" />
+
+                        <PendingActionsIcon color="warning" fontSize="large"/>
+
                         <Typography variant="h6">
-                            Departments
+
+                            Pending
+
                         </Typography>
 
                         <Typography variant="h4">
-                            4
+
+                            {pending}
+
                         </Typography>
+
                     </CardContent>
+
                 </Card>
+
             </Grid>
 
             <Grid item xs={12} md={3}>
-                <Card elevation={3}>
+
+                <Card>
+
                     <CardContent>
-                        <BeachAccessIcon color="warning" fontSize="large" />
+
+                        <CheckCircleIcon color="success" fontSize="large"/>
+
                         <Typography variant="h6">
-                            Leave Requests
+
+                            Approved
+
                         </Typography>
 
                         <Typography variant="h4">
-                            2
+
+                            {approved}
+
                         </Typography>
+
                     </CardContent>
+
                 </Card>
+
             </Grid>
 
             <Grid item xs={12} md={3}>
-                <Card elevation={3}>
+
+                <Card>
+
                     <CardContent>
-                        <PaidIcon color="secondary" fontSize="large" />
+
+                        <CancelIcon color="error" fontSize="large"/>
+
                         <Typography variant="h6">
-                            Avg Salary
+
+                            Rejected
+
                         </Typography>
 
                         <Typography variant="h4">
-                            ₺48K
+
+                            {rejected}
+
                         </Typography>
+
                     </CardContent>
+
                 </Card>
+
             </Grid>
 
         </Grid>

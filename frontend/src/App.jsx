@@ -1,10 +1,16 @@
-import { Box, Toolbar } from "@mui/material";
+import { useState } from "react";
+import { Box } from "@mui/material";
 
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+
 import Home from "./pages/Home";
+import UserPage from "./pages/UserPage";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
+
+    const [page, setPage] = useState("HOME");
 
     return (
 
@@ -12,21 +18,31 @@ function App() {
 
             <Navbar />
 
-            <Sidebar />
+            <Sidebar page={page} setPage={setPage} />
 
             <Box
                 component="main"
                 sx={{
                     flexGrow: 1,
+                    mt: 9,
+                    ml: "240px",
                     p: 4,
-                    background: "#F4F6F8",
+                    background: "#F5F7FA",
                     minHeight: "100vh"
                 }}
             >
 
-                <Toolbar />
+                {page === "HOME" && (
+                    <Home setPage={setPage} />
+                )}
 
-                <Home />
+                {page === "USER" && (
+                    <UserPage />
+                )}
+
+                {page === "ADMIN" && (
+                    <AdminPage />
+                )}
 
             </Box>
 

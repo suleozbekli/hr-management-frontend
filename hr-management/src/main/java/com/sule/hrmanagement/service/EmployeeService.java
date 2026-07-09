@@ -2,6 +2,7 @@ package com.sule.hrmanagement.service;
 
 import com.sule.hrmanagement.dto.EmployeeRequest;
 import com.sule.hrmanagement.dto.EmployeeResponse;
+import com.sule.hrmanagement.dto.LeaveRequestResponse;
 
 import java.util.List;
 

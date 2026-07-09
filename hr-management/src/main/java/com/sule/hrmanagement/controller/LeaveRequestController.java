@@ -4,6 +4,7 @@ import com.sule.hrmanagement.dto.LeaveRequestRequest;
 import com.sule.hrmanagement.dto.LeaveRequestResponse;
 import com.sule.hrmanagement.service.LeaveRequestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,4 +50,14 @@ public class LeaveRequestController {
     public LeaveRequestResponse rejectLeave(@PathVariable Long id) {
         return leaveRequestService.rejectLeave(id);
     }
+
+    // Admin'in onay/red süreci
+    @PutMapping("/{id}/status")
+    public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestBody String status) {
+        // "status" (APPROVED/REJECTED) verisini alıp veritabanını güncelle
+        leaveRequestService.updateLeaveStatus(id, status);
+        return ResponseEntity.ok("İzin durumu başarıyla güncellendi.");
+    }
 }
+
+

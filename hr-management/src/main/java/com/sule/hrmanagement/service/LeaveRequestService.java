@@ -19,4 +19,6 @@ public interface LeaveRequestService {
     LeaveRequestResponse approveLeave(Long id);
 
     LeaveRequestResponse rejectLeave(Long id);
+
+    void updateLeaveStatus(Long id, String status);
 }

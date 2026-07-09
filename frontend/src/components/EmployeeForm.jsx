@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import { addEmployee, updateEmployee } from "../api/api";
-
+import { useState } from "react";
 import {
     Paper,
     Typography,
@@ -8,10 +6,11 @@ import {
     TextField,
     Button
 } from "@mui/material";
+import { addEmployee } from "../api/api";
 
-function EmployeeForm({ selectedEmployee, refreshEmployees }) {
+function EmployeeForm({ refreshEmployees }) {
 
-    const emptyEmployee = {
+    const [employee, setEmployee] = useState({
         firstName: "",
         lastName: "",
         email: "",
@@ -21,15 +20,7 @@ function EmployeeForm({ selectedEmployee, refreshEmployees }) {
         salary: "",
         hireDate: "",
         annualLeave: ""
-    };
-
-    const [employee, setEmployee] = useState(emptyEmployee);
-
-    useEffect(() => {
-        if (selectedEmployee) {
-            setEmployee(selectedEmployee);
-        }
-    }, [selectedEmployee]);
+    });
 
     const handleChange = (e) => {
         setEmployee({
@@ -39,41 +30,64 @@ function EmployeeForm({ selectedEmployee, refreshEmployees }) {
     };
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         try {
 
-            if (employee.id) {
-                await updateEmployee(employee.id, employee);
-            } else {
-                await addEmployee(employee);
-            }
+            await addEmployee(employee);
 
-            setEmployee(emptyEmployee);
+            alert("Employee added successfully.");
+
+            setEmployee({
+                firstName: "",
+                lastName: "",
+                email: "",
+                phone: "",
+                department: "",
+                position: "",
+                salary: "",
+                hireDate: "",
+                annualLeave: ""
+            });
+
             refreshEmployees();
 
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
+
+            alert("Employee could not be added.");
+
         }
+
     };
 
     return (
 
-        <Paper elevation={3} sx={{ p: 4, mt: 4, borderRadius: 3 }}>
+        <Paper
+            elevation={3}
+            sx={{
+                p:4,
+                borderRadius:3,
+                mb:4
+            }}
+        >
 
             <Typography
                 variant="h5"
                 fontWeight="bold"
-                gutterBottom
+                mb={3}
             >
-                {employee.id ? "Update Employee" : "Add Employee"}
+
+                Add Employee
+
             </Typography>
 
             <form onSubmit={handleSubmit}>
 
                 <Grid container spacing={2}>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={6}>
+
                         <TextField
                             fullWidth
                             label="First Name"
@@ -81,9 +95,11 @@ function EmployeeForm({ selectedEmployee, refreshEmployees }) {
                             value={employee.firstName}
                             onChange={handleChange}
                         />
+
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={6}>
+
                         <TextField
                             fullWidth
                             label="Last Name"
@@ -91,9 +107,11 @@ function EmployeeForm({ selectedEmployee, refreshEmployees }) {
                             value={employee.lastName}
                             onChange={handleChange}
                         />
+
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={6}>
+
                         <TextField
                             fullWidth
                             label="Email"
@@ -101,9 +119,11 @@ function EmployeeForm({ selectedEmployee, refreshEmployees }) {
                             value={employee.email}
                             onChange={handleChange}
                         />
+
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={6}>
+
                         <TextField
                             fullWidth
                             label="Phone"
@@ -111,9 +131,11 @@ function EmployeeForm({ selectedEmployee, refreshEmployees }) {
                             value={employee.phone}
                             onChange={handleChange}
                         />
+
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={6}>
+
                         <TextField
                             fullWidth
                             label="Department"
@@ -121,9 +143,11 @@ function EmployeeForm({ selectedEmployee, refreshEmployees }) {
                             value={employee.department}
                             onChange={handleChange}
                         />
+
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={6}>
+
                         <TextField
                             fullWidth
                             label="Position"
@@ -131,51 +155,68 @@ function EmployeeForm({ selectedEmployee, refreshEmployees }) {
                             value={employee.position}
                             onChange={handleChange}
                         />
+
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={6}>
+
                         <TextField
                             fullWidth
-                            type="number"
                             label="Salary"
+                            type="number"
                             name="salary"
                             value={employee.salary}
                             onChange={handleChange}
                         />
+
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
-                        <TextField
-                            fullWidth
-                            type="date"
-                            label="Hire Date"
-                            name="hireDate"
-                            value={employee.hireDate}
-                            onChange={handleChange}
-                            InputLabelProps={{ shrink: true }}
-                        />
+                    <Grid item xs={6}>
+
+                        <Grid item xs={6}>
+                            <Grid item xs={6}>
+                                <Typography variant="body2" sx={{ mb: 0.5 }}>
+                                    Hire Date
+                                </Typography>
+
+                                <TextField
+                                    fullWidth
+                                    type="date"
+                                    name="hireDate"
+                                    value={employee.hireDate}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+
+                        </Grid>
+
                     </Grid>
 
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={6}>
+
                         <TextField
                             fullWidth
-                            type="number"
                             label="Annual Leave"
+                            type="number"
                             name="annualLeave"
                             value={employee.annualLeave}
                             onChange={handleChange}
                         />
+
                     </Grid>
 
                     <Grid item xs={12}>
+
                         <Button
-                            variant="contained"
-                            size="large"
                             fullWidth
+                            variant="contained"
                             type="submit"
                         >
-                            {employee.id ? "Update Employee" : "Add Employee"}
+
+                            Add Employee
+
                         </Button>
+
                     </Grid>
 
                 </Grid>
@@ -185,6 +226,7 @@ function EmployeeForm({ selectedEmployee, refreshEmployees }) {
         </Paper>
 
     );
+
 }
 
 export default EmployeeForm;
